@@ -33,6 +33,10 @@ jobs:
       run: npm run build
       env:
         NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        HOSTAWAY_API_KEY: ${{ secrets.HOSTAWAY_API_KEY }}
+        HOSTAWAY_ACCOUNT_ID: ${{ secrets.HOSTAWAY_ACCOUNT_ID }}
+        HOSTAWAY_BASE_URL: ${{ secrets.HOSTAWAY_BASE_URL }}
 
     - name: Deploy to Vercel (Production)
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
