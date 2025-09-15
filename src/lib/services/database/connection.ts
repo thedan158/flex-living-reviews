@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://thedan671:toisinh2001@cluster0.j67bp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://thedan671:toisinh2001@cluster0.j67bp.mongodb.net/flex-living-reviews?retryWrites=true&w=majority&appName=Cluster0';
 const USE_FALLBACK = process.env.USE_FALLBACK_DB === 'true' || !MONGODB_URI;
 
 if (!MONGODB_URI && !USE_FALLBACK) {
