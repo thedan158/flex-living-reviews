@@ -31,6 +31,8 @@ export interface NormalizedReview {
   source: string;
   normalizedRating: number;
   sentiment: string;
+  approved?: boolean;
+  status?: string;
   reviewCategory?: Array<{
     category: string;
     rating: number;

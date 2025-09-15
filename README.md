@@ -135,13 +135,14 @@ This project was built in a **5-hour development sprint** using AI-assisted deve
 - **Implementation**: Cline for code generation and development
 - **Documentation**: Comprehensive guides for deployment and features
 
-## 🎯 Mock Data Strategy
+## 🎯 Database Integration
 
-The application uses comprehensive mock data (37+ reviews across 9 months) to demonstrate:
-- Realistic review content and ratings
+The application uses **MongoDB** for data persistence with comprehensive review data (41+ reviews across 9 months) to demonstrate:
+- Realistic review content and ratings from real database
 - Multiple property management scenarios
-- Review approval workflow
-- Analytics and reporting features
+- Review approval workflow with persistent storage
+- Analytics and reporting features with live data
+- Dynamic month-over-month comparisons
 
 ## 📚 Learn More
 

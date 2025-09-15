@@ -129,9 +129,10 @@ Flex Living Reviews is a comprehensive property review management platform built
 - `GET /api/analytics` - Analytics data and insights
 
 ### 2. Data Management
-**Storage**: Local JSON file-based storage for development
+**Storage**: MongoDB database with persistent data storage
 **Structure**: TypeScript interfaces for type safety
 **Normalization**: Review data normalization across different sources
+**Persistence**: All review approvals and changes saved to database
 
 ### 3. State Management
 **Client State**: React useState and useEffect hooks

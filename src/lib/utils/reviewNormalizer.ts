@@ -52,6 +52,8 @@ export function normalizeReview(review: Review): NormalizedReview {
     source: review.source,
     normalizedRating,
     sentiment,
+    approved: review.approved,
+    status: review.status,
     reviewCategory: review.reviewCategory,
   };
 }

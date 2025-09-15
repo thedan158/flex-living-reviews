@@ -42,15 +42,17 @@ flex-living-reviews/
 │   │   │
 │   │   ├── api/                      # API Routes
 │   │   │   ├── analytics/
-│   │   │   │   └── route.ts          # GET /api/analytics
+│   │   │   │   └── route.ts          # GET /api/analytics (MongoDB data)
+│   │   │   ├── migrate/
+│   │   │   │   └── route.ts          # POST /api/migrate (data seeding)
 │   │   │   ├── properties/
 │   │   │   │   ├── route.ts          # GET /api/properties
 │   │   │   │   └── [id]/
 │   │   │   │       └── route.ts      # GET /api/properties/[id]
 │   │   │   └── reviews/
-│   │   │       ├── route.ts          # GET /api/reviews (aggregated)
+│   │   │       ├── route.ts          # GET /api/reviews (MongoDB aggregation)
 │   │   │       ├── approve/
-│   │   │       │   └── route.ts      # POST /api/reviews/approve
+│   │   │       │   └── route.ts      # POST /api/reviews/approve (MongoDB update)
 │   │   │       ├── google/
 │   │   │       │   └── route.ts      # GET /api/reviews/google
 │   │   │       └── hostaway/
@@ -60,7 +62,7 @@ flex-living-reviews/
 │   │   │   └── page.tsx
 │   │   │
 │   │   ├── dashboard/                # Manager Dashboard
-│   │   │   ├── page.tsx              # Dashboard page
+│   │   │   ├── page.tsx              # Dashboard page with MongoDB integration
 │   │   │   └── components/           # Dashboard components (empty)
 │   │   │
 │   │   ├── property/                 # Property pages
@@ -81,13 +83,17 @@ flex-living-reviews/
 │   │
 │   ├── lib/                          # Core Services & Utilities
 │   │   ├── services/                 # Service modules
-│   │   │   ├── database/             # Database services (empty)
-│   │   │   │   ├── models/           # Database models (empty)
-│   │   │   │   └── repositories/     # Database repositories (empty)
+│   │   │   ├── database/             # MongoDB database services
+│   │   │   │   ├── connection.ts     # MongoDB connection
+│   │   │   │   ├── models/           # Mongoose models
+│   │   │   │   │   └── Review.ts     # Review model
+│   │   │   │   └── repositories/     # Repository pattern
+│   │   │   │       └── ReviewRepository.ts # Review data access
+│   │   │   │   └── migrateData.ts    # Data migration utilities
 │   │   │   ├── google/               # Google services (empty)
 │   │   │   ├── hostaway/             # Hostaway services
 │   │   │   │   ├── api.ts            # Hostaway API client
-│   │   │   │   └── mockData.ts       # Mock Hostaway data
+│   │   │   │   └── mockData.ts       # Mock Hostaway data (41+ reviews)
 │   │   │   ├── properties/           # Properties services (empty)
 │   │   │   └── reviews/              # Reviews services (empty)
 │   │   │   └── storage.ts            # Local storage service
