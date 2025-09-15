@@ -7,7 +7,7 @@ export async function GET() {
 
   const totalReviews = allReviews.length;
   const averageRating = totalReviews > 0
-    ? allReviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+    ? allReviews.reduce((sum, review) => sum + (review.rating || 0), 0) / totalReviews
     : 0;
 
   const reviewsBySource = {
