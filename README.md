@@ -1,5 +1,9 @@
 # Flex Living Reviews 🏠⭐
 
+## 🚀 **LIVE APP**: [https://flex-living-reviews-nlxyoostg-thedan158s-projects.vercel.app](https://flex-living-reviews-nlxyoostg-thedan158s-projects.vercel.app)
+
+> **⚠️ IMPORTANT**: The version referenced in the "Submitted PDF" contains an outdated link. Use the URL above for the latest deployed version with full MongoDB integration.
+
 A comprehensive property review management platform built with Next.js 15, designed for property managers to monitor and manage guest reviews across multiple properties. Features a modern dashboard with analytics, review approval system, and automated CI/CD deployment.
 
 ## 🌟 Key Features
