@@ -27,6 +27,10 @@ interface Review {
   normalizedRating?: number;
   sentiment?: string;
   approved?: boolean;
+  reviewCategory?: Array<{
+    category: string;
+    rating: number;
+  }>;
 }
 
 export default function PropertyPage() {
@@ -260,6 +264,32 @@ export default function PropertyPage() {
                         </div>
                       </div>
                       <p className="text-stone-700 leading-relaxed text-base mb-4">{review.comment}</p>
+
+                      {/* Category Ratings */}
+                      {review.reviewCategory && review.reviewCategory.length > 0 && (
+                        <div className="mb-4 p-4 bg-stone-50 rounded-xl border border-stone-200">
+                          <p className="text-sm font-semibold text-stone-700 mb-3">Category Ratings:</p>
+                          <div className="grid grid-cols-2 gap-3">
+                            {review.reviewCategory.map((cat, idx) => (
+                              <div key={idx} className="flex items-center justify-between bg-white rounded-lg p-3 border border-stone-100">
+                                <span className="text-sm font-medium text-stone-700 capitalize">
+                                  {cat.category.replace('_', ' ')}
+                                </span>
+                                <div className="flex items-center space-x-1">
+                                  <span className="text-sm font-bold text-[#4A5D5A]">{cat.rating}/10</span>
+                                  <div className="w-8 h-2 bg-stone-200 rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full bg-[#4A5D5A] transition-all duration-300"
+                                      style={{ width: `${(cat.rating / 10) * 100}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="flex items-center space-x-4">
                         <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#4A5D5A]/10 text-[#4A5D5A] border border-[#4A5D5A]/20">
                           {review.channel}
