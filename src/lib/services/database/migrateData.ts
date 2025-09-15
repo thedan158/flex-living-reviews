@@ -117,7 +117,17 @@ export async function migrateMockData() {
     console.log('Checking properties data...');
     const existingPropertyCount = await propertiesRepository.count();
     if (existingPropertyCount > 0) {
-      console.log(`Database already contains ${existingPropertyCount} properties. Skipping property migration.`);
+      console.log(`Database already contains ${existingPropertyCount} properties. Updating property IDs to match reviews...`);
+
+      // Update existing properties to have correct IDs
+      for (const property of mockProperties) {
+        try {
+          await propertiesRepository.updateById(property.id, property);
+        } catch (error) {
+          console.log(`Property ${property.id} already has correct data or update failed:`, error instanceof Error ? error.message : String(error));
+        }
+      }
+      console.log('Properties updated successfully!');
     } else {
       console.log(`Migrating ${mockProperties.length} mock properties to MongoDB...`);
 
