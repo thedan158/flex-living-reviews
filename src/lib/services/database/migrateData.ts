@@ -2,10 +2,10 @@ import { reviewRepository } from './repositories/ReviewRepository';
 import { propertiesRepository } from './repositories/PropertiesRepository';
 import { mockHostawayReviews } from '../hostaway/mockData';
 
-// Mock properties data
+// Mock properties data - IDs match existing reviews (listingId values)
 const mockProperties = [
   {
-    id: 'luxury-downtown-apartment',
+    id: '1',
     name: 'Luxury Downtown Apartment',
     location: 'Downtown Bangkok',
     rating: 4.5,
@@ -30,7 +30,7 @@ const mockProperties = [
     ]
   },
   {
-    id: 'cozy-studio-midtown',
+    id: '2',
     name: 'Cozy Studio in Midtown',
     location: 'Midtown Bangkok',
     rating: 4.2,
@@ -52,7 +52,7 @@ const mockProperties = [
     ]
   },
   {
-    id: 'modern-city-loft',
+    id: '3',
     name: 'Modern City Loft',
     location: 'Central Bangkok',
     rating: 4.7,
