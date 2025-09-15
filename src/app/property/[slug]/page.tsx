@@ -256,7 +256,7 @@ export default function PropertyPage() {
                               </span>
                             ))}
                           </div>
-                          <span className="font-semibold text-stone-700">{(review.normalizedRating || review.rating)}/5</span>
+                          <span className="font-semibold text-stone-700">{(review.normalizedRating || review.rating).toFixed(2)}/5</span>
                         </div>
                       </div>
                       <p className="text-stone-700 leading-relaxed text-base mb-4">{review.comment}</p>
