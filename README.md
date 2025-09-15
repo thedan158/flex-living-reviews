@@ -1,6 +1,6 @@
 # Flex Living Reviews 🏠⭐
 
-## 🚀 **LIVE APP**: https://flex-living-reviews-thedan158s-projects.vercel.app/
+## 🚀 **LIVE APP**: https://flex-living-reviews-seven.vercel.app/
 
 > **⚠️ IMPORTANT**: The version referenced in the "Submitted PDF" contains an outdated link. Use the URL above for the latest deployed version with full MongoDB integration.
 
