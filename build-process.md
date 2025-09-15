@@ -98,17 +98,25 @@ npm run lint
 - `npm run build --turbopack` - Build with Turbopack for faster builds
 - `npm run lint` - Check code quality with ESLint
 
-## CI/CD Pipeline - Vercel Deployment
+## CI/CD Pipeline - GitHub Actions + Vercel
 
-### Automated Deployment Setup
+### 🚀 Automated Deployment Setup
+
 **Trigger**: Automatic deployment when code is pushed to `main` branch on GitHub
 **Platform**: Vercel (recommended for Next.js applications)
+**CI/CD**: GitHub Actions for testing and deployment
 **Build Command**: `npm run build`
 **Output Directory**: `.next` (handled automatically by Next.js)
 
-### Vercel Configuration
+### 📋 Prerequisites
 
-#### vercel.json (Recommended)
+1. **Vercel Account**: Sign up at [vercel.com](https://vercel.com)
+2. **GitHub Repository**: Your code must be in a GitHub repository
+3. **MongoDB Database**: Set up MongoDB Atlas or another MongoDB provider
+
+### ⚙️ Configuration Files
+
+#### 1. Vercel Configuration (`vercel.json`)
 ```json
 {
   "buildCommand": "npm run build",
@@ -124,12 +132,150 @@ npm run lint
       "source": "/api/(.*)",
       "destination": "/api/$1"
     }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
   ]
 }
 ```
 
-#### Environment Variables (Vercel Dashboard)
+#### 2. GitHub Actions Workflows
+
+**Deployment Workflow** (`.github/workflows/deploy.yml`):
+```yaml
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+
+    - name: Run type checking
+      run: npx tsc --noEmit
+
+    - name: Build application
+      run: npm run build
+
+    - name: Deploy to Vercel (Production)
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        vercel-args: '--prod'
+
+    - name: Deploy to Vercel (Preview)
+      if: github.event_name == 'pull_request'
+      uses: amondnet/vercel-action@v25
+      with:
+        vercel-token: ${{ secrets.VERCEL_TOKEN }}
+        vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+        vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
 ```
+
+**Testing Workflow** (`.github/workflows/test.yml`):
+```yaml
+name: Test Suite
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+
+    - name: Run type checking
+      run: npx tsc --noEmit
+
+    - name: Run tests
+      run: npm test
+
+    - name: Build application
+      run: npm run build
+```
+
+### 🔐 Environment Variables Setup
+
+#### GitHub Secrets (Required for CI/CD)
+Go to your GitHub repository → Settings → Secrets and variables → Actions
+
+Add these secrets:
+```
+VERCEL_TOKEN=your_vercel_token
+VERCEL_ORG_ID=your_vercel_org_id
+VERCEL_PROJECT_ID=your_vercel_project_id
+NEXT_PUBLIC_APP_URL=https://your-app-name.vercel.app
+```
+
+#### Vercel Environment Variables
+In Vercel dashboard → Project Settings → Environment Variables
+
+Add these for production:
+```
+MONGODB_URI=your_mongodb_connection_string
 HOSTAWAY_API_KEY=your_production_hostaway_api_key
 HOSTAWAY_ACCOUNT_ID=your_production_account_id
 GOOGLE_PLACES_API_KEY=your_production_google_api_key
