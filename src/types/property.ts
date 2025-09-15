@@ -2,7 +2,7 @@ export interface Property {
   id: string;
   name: string;
   location: string;
-  rating: number;
+  rating?: number; // Calculated dynamically from approved reviews
   description: string;
   amenities: string[];
   images: string[];

@@ -5,7 +5,7 @@ export interface IProperty extends Document {
   id: string;
   name: string;
   location: string;
-  rating: number;
+  rating?: number; // Calculated dynamically from reviews
   description: string;
   amenities: string[];
   images: string[];
@@ -22,7 +22,7 @@ const PropertySchema = new Schema<IProperty>({
   id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   location: { type: String, required: true },
-  rating: { type: Number, required: true, min: 0, max: 5 },
+  rating: { type: Number, min: 0, max: 5 }, // Optional - calculated from reviews
   description: { type: String, required: true },
   amenities: [{ type: String }],
   images: [{ type: String }],

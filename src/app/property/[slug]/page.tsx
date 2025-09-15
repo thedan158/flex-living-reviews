@@ -8,7 +8,7 @@ interface Property {
   id: number;
   name: string;
   location: string;
-  rating: number;
+  rating?: number;
   description?: string;
   amenities?: string[];
   images?: string[];
@@ -56,6 +56,14 @@ export default function PropertyPage() {
         );
         setApprovedReviews(propertyReviews);
         setReviews(reviewsData.reviews);
+
+        // Calculate average rating from normalized ratings of approved reviews
+        if (propertyReviews.length > 0) {
+          const averageRating = propertyReviews.reduce((sum: number, review: Review) =>
+            sum + (review.normalizedRating || review.rating), 0
+          ) / propertyReviews.length;
+          setProperty(prev => prev ? { ...prev, rating: Math.round(averageRating * 10) / 10 } : null);
+        }
       } catch (error) {
         console.error('Error fetching property data:', error);
       } finally {
@@ -204,7 +212,7 @@ export default function PropertyPage() {
                       {[...Array(5)].map((_, i) => (
                         <span
                           key={i}
-                          className={`text-xl ${i < Math.floor(property.rating) ? 'text-amber-500' : 'text-stone-300'}`}
+                          className={`text-xl ${i < Math.floor(property.rating || 0) ? 'text-amber-500' : 'text-stone-300'}`}
                         >
                           ★
                         </span>

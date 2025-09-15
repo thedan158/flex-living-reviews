@@ -8,7 +8,7 @@ interface Property {
   id: number;
   name: string;
   location: string;
-  rating: number;
+  rating?: number;
   description?: string;
   amenities?: string[];
   images?: string[];
@@ -50,11 +50,22 @@ export default function PropertiesPage() {
         const approvedReviews = reviewsData.reviews.filter((review: Review) => review.approved);
         const propertyIdsWithApprovedReviews = [...new Set(approvedReviews.map((review: Review) => review.listingId))];
 
-        // Add review count to properties
-        const propertiesWithReviewCount = propertiesData.properties.map((property: Property) => ({
-          ...property,
-          reviewCount: approvedReviews.filter((review: Review) => review.listingId === property.id.toString()).length
-        }));
+        // Add review count and calculate rating from approved reviews
+        const propertiesWithReviewCount = propertiesData.properties.map((property: Property) => {
+          const propertyReviews = approvedReviews.filter((review: Review) => review.listingId === property.id.toString());
+          const reviewCount = propertyReviews.length;
+          const averageRating = reviewCount > 0
+            ? propertyReviews.reduce((sum: number, review: Review) =>
+                sum + (review.normalizedRating || review.rating), 0
+              ) / reviewCount
+            : 0;
+
+          return {
+            ...property,
+            reviewCount,
+            rating: reviewCount > 0 ? Math.round(averageRating * 10) / 10 : undefined
+          };
+        });
 
         // Filter to only show properties with approved reviews
         const filteredProperties = propertiesWithReviewCount.filter((property: Property) =>
