@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import LoadingOverlay from '../../../components/LoadingOverlay';
 
 interface Property {
   id: number;
@@ -67,21 +68,15 @@ export default function PropertyPage() {
     }
   }, [slug]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl">Loading property details...</div>
-      </div>
-    );
-  }
-
-  if (!property) {
+  if (!property && !loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl">Property not found</div>
       </div>
     );
   }
+
+  if (!property) return null;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -306,6 +301,12 @@ export default function PropertyPage() {
           </div>
         </div>
       </div>
+
+      {/* Loading Overlay */}
+      <LoadingOverlay
+        isVisible={loading}
+        message="Loading property details from MongoDB..."
+      />
     </div>
   );
 }
