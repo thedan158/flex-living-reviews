@@ -9,17 +9,22 @@ class HostawayApiService {
 
   constructor() {
     this.config = {
-      apiKey: process.env.HOSTAWAY_API_KEY!,
-      accountId: process.env.HOSTAWAY_ACCOUNT_ID!,
+      apiKey: process.env.HOSTAWAY_API_KEY || '',
+      accountId: process.env.HOSTAWAY_ACCOUNT_ID || '',
       baseUrl: process.env.HOSTAWAY_BASE_URL || 'https://api.hostaway.com/v1',
     };
 
     if (!this.config.apiKey || !this.config.accountId) {
-      throw new Error('Hostaway API credentials not configured');
+      console.warn('Hostaway API credentials not configured, using mock data');
     }
   }
 
   private async makeRequest(endpoint: string, options: RequestInit = {}): Promise<any> {
+    // If credentials are not configured, throw error to trigger fallback to mock data
+    if (!this.config.apiKey || !this.config.accountId) {
+      throw new Error('Hostaway API credentials not configured');
+    }
+
     const url = `${this.config.baseUrl}${endpoint}`;
 
     const headers = {
