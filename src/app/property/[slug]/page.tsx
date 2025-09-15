@@ -250,13 +250,13 @@ export default function PropertyPage() {
                             {[...Array(5)].map((_, i) => (
                               <span
                                 key={i}
-                                className={`text-base ${i < review.rating ? 'text-amber-500' : 'text-stone-300'}`}
+                                className={`text-base ${i < (review.normalizedRating || review.rating) ? 'text-amber-500' : 'text-stone-300'}`}
                               >
                                 ★
                               </span>
                             ))}
                           </div>
-                          <span className="font-semibold text-stone-700">{review.rating}/5</span>
+                          <span className="font-semibold text-stone-700">{(review.normalizedRating || review.rating)}/5</span>
                         </div>
                       </div>
                       <p className="text-stone-700 leading-relaxed text-base mb-4">{review.comment}</p>
