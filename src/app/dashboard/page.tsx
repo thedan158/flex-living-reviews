@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 interface Review {
   id: string;
@@ -50,6 +51,7 @@ export default function Dashboard() {
   const [filterTime, setFilterTime] = useState<string>('all');
   const [selectedProperty, setSelectedProperty] = useState<string>('all');
   const [activeTab, setActiveTab] = useState<'overview' | 'properties' | 'reviews' | 'analytics'>('overview');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Calculate month-over-month changes
   const calculateMonthOverMonth = () => {
@@ -77,23 +79,36 @@ export default function Dashboard() {
   const monthOverMonth = calculateMonthOverMonth();
 
   useEffect(() => {
-    // Fetch reviews
-    fetch('/api/reviews')
-      .then(res => res.json())
-      .then(data => {
-        setReviews(data.reviews);
-        setFilteredReviews(data.reviews);
-      });
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
 
-    // Fetch analytics
-    fetch('/api/analytics')
-      .then(res => res.json())
-      .then(data => setAnalytics(data));
+        // Fetch all data in parallel
+        const [reviewsRes, analyticsRes, propertiesRes] = await Promise.all([
+          fetch('/api/reviews'),
+          fetch('/api/analytics'),
+          fetch('/api/properties')
+        ]);
 
-    // Fetch properties
-    fetch('/api/properties')
-      .then(res => res.json())
-      .then(data => setProperties(data.properties));
+        const [reviewsData, analyticsData, propertiesData] = await Promise.all([
+          reviewsRes.json(),
+          analyticsRes.json(),
+          propertiesRes.json()
+        ]);
+
+        setReviews(reviewsData.reviews);
+        setFilteredReviews(reviewsData.reviews);
+        setAnalytics(analyticsData);
+        setProperties(propertiesData.properties);
+
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -826,6 +841,12 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {/* Loading Overlay */}
+      <LoadingOverlay
+        isVisible={isLoading}
+        message="Loading dashboard data from MongoDB..."
+      />
     </div>
   );
 }
