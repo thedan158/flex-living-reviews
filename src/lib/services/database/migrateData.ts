@@ -119,12 +119,26 @@ export async function migrateMockData() {
     if (existingPropertyCount > 0) {
       console.log(`Database already contains ${existingPropertyCount} properties. Updating property IDs to match reviews...`);
 
-      // Update existing properties to have correct IDs
-      for (const property of mockProperties) {
+      // Update existing properties by their current IDs to have correct new IDs
+      const idMapping = {
+        'luxury-downtown-apartment': '1',
+        'cozy-studio-midtown': '2',
+        'modern-city-loft': '3'
+      };
+
+      for (const [oldId, newId] of Object.entries(idMapping)) {
         try {
-          await propertiesRepository.updateById(property.id, property);
+          const propertyData = mockProperties.find(p => p.id === newId);
+          if (propertyData) {
+            // Find property by old ID and update with new data
+            const existingProperty = await propertiesRepository.findById(oldId);
+            if (existingProperty) {
+              await propertiesRepository.updateById(oldId, { ...propertyData, id: newId });
+              console.log(`Updated property ${oldId} to ID ${newId}`);
+            }
+          }
         } catch (error) {
-          console.log(`Property ${property.id} already has correct data or update failed:`, error instanceof Error ? error.message : String(error));
+          console.log(`Property ${oldId} update failed:`, error instanceof Error ? error.message : String(error));
         }
       }
       console.log('Properties updated successfully!');
