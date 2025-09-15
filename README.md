@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flex Living Reviews 🏠⭐
 
-## Getting Started
+A comprehensive property review management platform built with Next.js 15, designed for property managers to monitor and manage guest reviews across multiple properties. Features a modern dashboard with analytics, review approval system, and automated CI/CD deployment.
 
-First, run the development server:
+## 🌟 Key Features
+
+- **Manager Dashboard** - Central hub for property performance monitoring
+- **Review Management** - Approve/reject reviews with bulk operations
+- **Advanced Analytics** - Charts, sentiment analysis, and performance metrics
+- **Multi-Property Support** - Manage reviews across different properties
+- **Responsive Design** - Mobile-first approach with modern UI
+- **API Integration Ready** - Structured for Hostaway and Google Reviews APIs
+
+## 📋 Documentation
+
+This repository includes comprehensive documentation to help you understand and work with the project:
+
+### 📖 Documentation Files
+
+| File | Description | When to Read |
+|------|-------------|--------------|
+| **[`build-process.md`](build-process.md)** | Complete CI/CD setup and deployment guide | Setting up automated deployments, Vercel configuration, monitoring |
+| **[`features.md`](features.md)** | Detailed feature overview and functionality | Understanding platform capabilities, dashboard features, analytics |
+| **[`flexliving-project-structure.md`](flexliving-project-structure.md)** | Project architecture and technical setup | Developer onboarding, understanding codebase structure, API endpoints |
+
+### 🚀 Quick Start Guides
+
+- **For Developers**: Start with [`flexliving-project-structure.md`](flexliving-project-structure.md) to understand the architecture
+- **For Deployment**: Read [`build-process.md`](build-process.md) for CI/CD setup
+- **For Features**: Check [`features.md`](features.md) to explore platform capabilities
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts for data visualization
+- **State Management**: TanStack React Query
+- **Deployment**: Vercel with automated CI/CD
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/thedan158/flex-living-reviews.git
+   cd flex-living-reviews
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.local.example .env.local
+   # Edit .env.local with your API keys
+   ```
+
+4. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open your browser**
+   ```
+   http://localhost:3000
+   ```
+
+## 📊 Available Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run test         # Run tests (when implemented)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏗️ Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+flex-living-reviews/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── api/            # API routes
+│   │   ├── dashboard/      # Manager dashboard
+│   │   └── property/       # Property pages
+│   ├── components/         # Reusable UI components
+│   ├── lib/               # Core services and utilities
+│   └── types/             # TypeScript definitions
+├── public/                # Static assets
+├── data/                  # Local data storage
+└── docs/                  # Documentation (see markdown files above)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔧 API Endpoints
 
-## Learn More
+- `GET /api/reviews` - Fetch all reviews with aggregation
+- `POST /api/reviews/approve` - Approve/reject reviews
+- `GET /api/properties` - Property listings
+- `GET /api/analytics` - Analytics data and insights
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Automated Deployment (Recommended)
+This project is configured for automatic deployment to Vercel when code is pushed to the `main` branch.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Setup Steps:**
+1. Connect your GitHub repository to Vercel
+2. Configure environment variables in Vercel dashboard
+3. Deployments happen automatically on every push to main
 
-## Deploy on Vercel
+**For detailed deployment instructions, see [`build-process.md`](build-process.md)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Manual Deployment
+```bash
+# Install Vercel CLI
+npm i -g vercel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Deploy to production
+vercel --prod
+```
+
+## 📈 Development Timeline
+
+This project was built in a **5-hour development sprint** using AI-assisted development tools:
+- **Planning & Architecture**: Claude AI for project structure design
+- **Implementation**: Cline for code generation and development
+- **Documentation**: Comprehensive guides for deployment and features
+
+## 🎯 Mock Data Strategy
+
+The application uses comprehensive mock data (37+ reviews across 9 months) to demonstrate:
+- Realistic review content and ratings
+- Multiple property management scenarios
+- Review approval workflow
+- Analytics and reporting features
+
+## 📚 Learn More
+
+- **[`features.md`](features.md)** - Complete feature overview and user guide
+- **[`build-process.md`](build-process.md)** - CI/CD and deployment documentation
+- **[`flexliving-project-structure.md`](flexliving-project-structure.md)** - Technical architecture guide
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is private and proprietary.
+
+---
+
+**Ready to explore?** Start with [`features.md`](features.md) to see what the platform can do, or dive into [`build-process.md`](build-process.md) for deployment setup!
