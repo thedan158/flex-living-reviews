@@ -105,7 +105,7 @@ export default function PropertyPage() {
               <div className="flex items-center mb-4 sm:mb-0">
                 <div className="flex items-center mr-6">
                   <span className="text-amber-500 text-2xl mr-2">★</span>
-                  <span className="text-xl font-semibold text-stone-900">{property.rating}</span>
+                  <span className="text-xl font-semibold text-stone-900">{property.rating?.toFixed(2)}</span>
                   <span className="text-stone-500 ml-2">({approvedReviews.length} reviews)</span>
                 </div>
               </div>
@@ -207,7 +207,7 @@ export default function PropertyPage() {
                 </div>
                 <div className="text-right">
                   <div className="flex items-center">
-                    <span className="text-4xl font-bold text-stone-900 mr-3">{property.rating}</span>
+                    <span className="text-4xl font-bold text-stone-900 mr-3">{property.rating?.toFixed(2)}</span>
                     <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <span
@@ -284,7 +284,7 @@ export default function PropertyPage() {
                   <span className="text-stone-600">Rating</span>
                   <div className="flex items-center">
                     <span className="text-amber-500 mr-1">★</span>
-                    <span className="font-semibold text-stone-900">{property.rating}</span>
+                    <span className="font-semibold text-stone-900">{property.rating?.toFixed(2)}</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between py-3 border-b border-stone-100">

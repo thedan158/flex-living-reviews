@@ -158,7 +158,7 @@ export default function PropertiesPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center">
                       <span className="text-amber-500 text-lg mr-1">★</span>
-                      <span className="font-semibold text-stone-900 mr-2">{property.rating}</span>
+                      <span className="font-semibold text-stone-900 mr-2">{property.rating?.toFixed(2)}</span>
                       <span className="text-stone-500 text-sm">
                         ({property.reviewCount || 0} review{(property.reviewCount || 0) !== 1 ? 's' : ''})
                       </span>
